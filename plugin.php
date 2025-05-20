@@ -103,10 +103,12 @@ class Plugin {
 	 */
 	public function register_widgets( $widgets_manager ) {
 		// Its is now safe to include Widgets files
+		require_once( __DIR__ . '/widgets/demo.php' );
 		require_once( __DIR__ . '/widgets/hello-world.php' );
 		require_once( __DIR__ . '/widgets/inline-editing.php' );
 
 		// Register Widgets
+		$widgets_manager->register( new Widgets\Portx_Demo() );
 		$widgets_manager->register( new Widgets\Hello_World() );
 		$widgets_manager->register( new Widgets\Inline_Editing() );
 	}
@@ -124,6 +126,19 @@ class Plugin {
 		new Page_Settings();
 	}
 
+
+	//widget category create
+	public function portx_add_widget_categories($harry_add_cat_manager){
+		$harry_add_cat_manager->add_category(
+			'portx-category',
+			[
+				'title' => esc_html__('Portx Core', 'harry-core'),
+				'icon' => 'fa fa-plug',
+			]
+			);
+	}
+
+
 	/**
 	 *  Plugin class constructor
 	 *
@@ -139,6 +154,9 @@ class Plugin {
 
 		// Register widgets
 		add_action( 'elementor/widgets/register', [ $this, 'register_widgets' ] );
+
+		// Widget Category
+		add_action( 'elementor/elements/categories_registered', [$this, 'portx_add_widget_categories'] );
 
 		// Register editor scripts
 		add_action( 'elementor/editor/after_enqueue_scripts', [ $this, 'editor_scripts' ] );
