@@ -13,6 +13,8 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
+include_once('inc/portx-core-funcion.php');
+
 /**
  * Main Portx Core Class
  *

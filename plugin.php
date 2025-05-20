@@ -103,12 +103,12 @@ class Plugin {
 	 */
 	public function register_widgets( $widgets_manager ) {
 		// Its is now safe to include Widgets files
+		require_once( __DIR__ . '/widgets/hero.php' );
 		require_once( __DIR__ . '/widgets/demo.php' );
 		require_once( __DIR__ . '/widgets/hello-world.php' );
 		require_once( __DIR__ . '/widgets/inline-editing.php' );
 
 		// Register Widgets
-		$widgets_manager->register( new Widgets\Portx_Demo() );
 		$widgets_manager->register( new Widgets\Hello_World() );
 		$widgets_manager->register( new Widgets\Inline_Editing() );
 	}

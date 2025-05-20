@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
  *
  * @since 1.0.0
  */
-class Portx_Demo extends Widget_Base {
+class Portx_Hero extends Widget_Base {
 
 	/**
 	 * Retrieve the widget name.
@@ -25,7 +25,7 @@ class Portx_Demo extends Widget_Base {
 	 * @return string Widget name.
 	 */
 	public function get_name() {
-		return 'demo-portx';
+		return 'portx-hero';
 	}
 
 	/**
@@ -38,7 +38,7 @@ class Portx_Demo extends Widget_Base {
 	 * @return string Widget title.
 	 */
 	public function get_title() {
-		return __( 'Demo Test', 'portx-core' );
+		return __( 'Portx Hero', 'portx-core' );
 	}
 
 	/**
@@ -96,7 +96,13 @@ class Portx_Demo extends Widget_Base {
 	 *
 	 * @access protected
 	 */
-	protected function register_controls() {
+	protected function register_controls(){
+		$this->register_controls_section();
+		$this->style_tab_content();
+	}
+
+
+	protected function register_controls_section() {
 		$this->start_controls_section(
 			'section_content',
 			[
@@ -113,18 +119,22 @@ class Portx_Demo extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'Sub_title',
-			[
-				'label' => __( 'Sub Title', 'portx-core' ),
-				'type' => Controls_Manager::TEXT,
-				'label_block' => true,
-			]
-		);
+	$this->add_control(
+		'arrow_title',
+		[
+		'label' => __( 'Arrow Title', 'portx-core' ),
+		'type' => Controls_Manager::TEXT,
+		'label_block' => true,
+		]
+	);
+
 
 		$this->end_controls_section();
 
-		// start style control
+	}
+
+	// start style control
+	protected function style_tab_content(){
 		$this->start_controls_section(
 			'section_style',
 			[
@@ -185,9 +195,13 @@ class Portx_Demo extends Widget_Base {
                   <div class="circal">
                   </div>
                   <div class="cargo-shipping text-end ">
+
+					<?php if(!empty($settings['arrow_title'])): ?>
                      <div class="cargo-shipping-text">
-                        <span>Cargo Shipping</span>
+                        <span><?php echo portx_core_kses( $settings['arrow_title']); ?></span>
                      </div>
+					<?php endif; ?> 
+
                   </div>
                   <div class="tp-slider__counter-number d-flex align-items-start">
                      <span>01</span>
@@ -199,8 +213,12 @@ class Portx_Demo extends Widget_Base {
                      <div class="row">
                         <div class="col-xxl-9 col-xl-9">
                            <div class="tp-slider__content p-relative z-index-1">
-                              <h2 class="tp-slider-title mb-35"><?php echo esc_html($settings['title']); ?>
+
+						   <?php if(!empty($settings['title'])): ?>
+                              <h2 class="tp-slider-title mb-35"><?php echo portx_core_kses($settings['title']); ?>
                               </h2>
+							<?php endif; ?>
+
                               <div class="tp-slide-btn-box">
                                  <a class="thm-btn" href="about.html">EXPLORE MORE</a>
                               </div>
@@ -224,9 +242,13 @@ class Portx_Demo extends Widget_Base {
                   <div class="circal">
                   </div>
                   <div class="cargo-shipping text-end">
+
+					<?php if(!empty($settings['arrow_title'])): ?>
                      <div class="cargo-shipping-text">
-                        <span>Cargo Shipping</span>
+                        <span><?php echo portx_core_kses( $settings['arrow_title']); ?></span>
                      </div>
+					<?php endif; ?>
+
                   </div>
                   <div class="tp-slider__counter-number d-flex align-items-start">
                      <span>03</span>
@@ -238,8 +260,12 @@ class Portx_Demo extends Widget_Base {
                      <div class="row">
                         <div class="col-xl-9">
                            <div class="tp-slider__content p-relative z-index-1">
-                              <h2 class="tp-slider-title mb-35"><?php echo esc_html($settings['title']); ?>
+							
+						   <?php if(!empty($settings['title'])): ?>
+                              <h2 class="tp-slider-title mb-35"><?php echo portx_core_kses($settings['title']); ?>
                               </h2>
+							<?php endif; ?> 
+
                               <div class="tp-slide-btn-box">
                                  <a class="thm-btn" href="about.html">EXPLORE MORE</a>
                               </div>
@@ -263,9 +289,13 @@ class Portx_Demo extends Widget_Base {
                   <div class="circal">
                   </div>
                   <div class="cargo-shipping text-end">
+
+				  <?php if(!empty($settings['arrow_title'])): ?>
                      <div class="cargo-shipping-text">
-                        <span>Cargo Shipping</span>
+                        <span><?php echo portx_core_kses( $settings['arrow_title']); ?></span>
                      </div>
+				 <?php endif; ?> 
+
                   </div>
                   <div class="tp-slider__counter-number d-flex align-items-start">
                      <span>02</span>
@@ -277,8 +307,12 @@ class Portx_Demo extends Widget_Base {
                      <div class="row">
                         <div class="col-xl-9">
                            <div class="tp-slider__content p-relative z-index-1">
-                              <h2 class="tp-slider-title mb-35"><?php echo esc_html($settings['title']); ?>
+
+							<?php if(!empty($settings['title'])): ?>
+                              <h2 class="tp-slider-title mb-35"><?php echo portx_core_kses($settings['title']); ?>
                               </h2>
+							<?php endif; ?>
+
                               <div class="tp-slide-btn-box">
                                  <a class="thm-btn" href="about.html">EXPLORE MORE</a>
                               </div>
@@ -303,4 +337,4 @@ class Portx_Demo extends Widget_Base {
 }
 
 // Register Widgets
-$widgets_manager->register( new Portx_Demo() );
+$widgets_manager->register( new Portx_Hero() );
