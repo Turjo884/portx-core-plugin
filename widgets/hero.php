@@ -96,15 +96,17 @@ class Portx_Hero extends Widget_Base {
 	 *
 	 * @access protected
 	 */
-	protected function register_controls(){
-		$this->register_controls_section();
-		$this->style_tab_content();
-	}
 
+	 protected function register_controls(){
+			$this->register_controls_section();
+			$this->style_tab_controls();
+	 }
 
+	//  content tab
 	protected function register_controls_section() {
+		// start text section
 		$this->start_controls_section(
-			'section_content',
+			'hero_section_content',
 			[
 				'label' => __( 'Banner', 'portx-core' ),
 			]
@@ -113,28 +115,59 @@ class Portx_Hero extends Widget_Base {
 		$this->add_control(
 			'title',
 			[
-				'label' => __( 'Title', 'portx-core' ),
+				'label' => __( 'Main Title', 'portx-core' ),
 				'type' => Controls_Manager::TEXT,
+				'default' => esc_html__( 'Main Tittle One', 'portx' ),
 				'label_block' => true,
 			]
 		);
 
-	$this->add_control(
-		'arrow_title',
-		[
-		'label' => __( 'Arrow Title', 'portx-core' ),
-		'type' => Controls_Manager::TEXT,
-		'label_block' => true,
-		]
-	);
+		$this->end_controls_section();
+		// end text section
 
+		// start button section
+		$this->start_controls_section(
+			'hero_button_content',
+			[
+				'label' => __( 'Button', 'portx-core' ),
+			]
+		);
+
+		$this->add_control(
+			'portx_button',
+			[
+				'label' => __( 'Button Text', 'portx-core' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => esc_html__( 'Button Text', 'portx' ),
+				'label_block' => true,
+			]
+		);
+
+		$this->add_control(
+			'portx_button_url',
+			[
+				'label' => esc_html__( 'Link', 'textdomain' ),
+				'type' => \Elementor\Controls_Manager::URL,
+				'options' => [ 'url', 'is_external', 'nofollow' ],
+				'default' => [
+					'url' => '#',
+					'is_external' => false,
+					'nofollow' => false,
+					// 'custom_attributes' => '',
+				],
+				'label_block' => true,
+			]
+		);
 
 		$this->end_controls_section();
+		// end button section
+
 
 	}
 
-	// start style control
-	protected function style_tab_content(){
+	// style tab
+	protected function style_tab_controls(){
+		// start style control
 		$this->start_controls_section(
 			'section_style',
 			[
@@ -162,7 +195,8 @@ class Portx_Hero extends Widget_Base {
 		);
 
 		$this->end_controls_section();
-	}
+
+	 }
 
 	/**
 	 * Render the widget output on the frontend.
@@ -175,9 +209,15 @@ class Portx_Hero extends Widget_Base {
 	 */
 	protected function render() {
 		$settings = $this->get_settings_for_display();
+
+			if ( ! empty( $settings['portx_button'] ) ) {	
+			$this->add_link_attributes( 'button_arg', $settings['portx_button_url'] );
+			$this->add_render_attribute('button_arg', 'class', 'thm-btn');
+		}	
+
 		?>
 
- <!-- slider area start -->
+	<!-- slider area start -->
    <div class="tp-slider__area p-relative">
       <div class="hero-active swiper-container">
          <div class="swiper-wrapper">
@@ -195,13 +235,9 @@ class Portx_Hero extends Widget_Base {
                   <div class="circal">
                   </div>
                   <div class="cargo-shipping text-end ">
-
-					<?php if(!empty($settings['arrow_title'])): ?>
                      <div class="cargo-shipping-text">
-                        <span><?php echo portx_core_kses( $settings['arrow_title']); ?></span>
+                        <span>Cargo Shipping</span>
                      </div>
-					<?php endif; ?> 
-
                   </div>
                   <div class="tp-slider__counter-number d-flex align-items-start">
                      <span>01</span>
@@ -214,14 +250,17 @@ class Portx_Hero extends Widget_Base {
                         <div class="col-xxl-9 col-xl-9">
                            <div class="tp-slider__content p-relative z-index-1">
 
-						   <?php if(!empty($settings['title'])): ?>
+						   	<?php if(!empty($settings['title'])) : ?>
                               <h2 class="tp-slider-title mb-35"><?php echo portx_core_kses($settings['title']); ?>
                               </h2>
 							<?php endif; ?>
 
+							<?php if(!empty($settings['portx_button'])) : ?>
                               <div class="tp-slide-btn-box">
-                                 <a class="thm-btn" href="about.html">EXPLORE MORE</a>
+                                 <a <?php echo $this->get_render_attribute_string('button_arg'); ?>><?php echo esc_html($settings['portx_button']); ?></a>
                               </div>
+							<?php endif; ?>
+
                            </div>
                         </div>
                      </div>
@@ -242,13 +281,9 @@ class Portx_Hero extends Widget_Base {
                   <div class="circal">
                   </div>
                   <div class="cargo-shipping text-end">
-
-					<?php if(!empty($settings['arrow_title'])): ?>
                      <div class="cargo-shipping-text">
-                        <span><?php echo portx_core_kses( $settings['arrow_title']); ?></span>
+                        <span>Cargo Shipping</span>
                      </div>
-					<?php endif; ?>
-
                   </div>
                   <div class="tp-slider__counter-number d-flex align-items-start">
                      <span>03</span>
@@ -261,14 +296,17 @@ class Portx_Hero extends Widget_Base {
                         <div class="col-xl-9">
                            <div class="tp-slider__content p-relative z-index-1">
 							
-						   <?php if(!empty($settings['title'])): ?>
+						   	<?php if(!empty($settings['title'])) : ?>
                               <h2 class="tp-slider-title mb-35"><?php echo portx_core_kses($settings['title']); ?>
                               </h2>
-							<?php endif; ?> 
+							<?php endif; ?>
 
+							<?php if(!empty($settings['portx_button'])) : ?>
                               <div class="tp-slide-btn-box">
-                                 <a class="thm-btn" href="about.html">EXPLORE MORE</a>
+                                 <a <?php echo $this->get_render_attribute_string('button_arg'); ?>><?php echo esc_html($settings['portx_button']); ?></a>
                               </div>
+							<?php endif; ?>
+
                            </div>
                         </div>
                      </div>
@@ -289,13 +327,9 @@ class Portx_Hero extends Widget_Base {
                   <div class="circal">
                   </div>
                   <div class="cargo-shipping text-end">
-
-				  <?php if(!empty($settings['arrow_title'])): ?>
                      <div class="cargo-shipping-text">
-                        <span><?php echo portx_core_kses( $settings['arrow_title']); ?></span>
+                        <span>Cargo Shipping</span>
                      </div>
-				 <?php endif; ?> 
-
                   </div>
                   <div class="tp-slider__counter-number d-flex align-items-start">
                      <span>02</span>
@@ -308,14 +342,17 @@ class Portx_Hero extends Widget_Base {
                         <div class="col-xl-9">
                            <div class="tp-slider__content p-relative z-index-1">
 
-							<?php if(!empty($settings['title'])): ?>
+						   	<?php if(!empty($settings['title'])) : ?>
                               <h2 class="tp-slider-title mb-35"><?php echo portx_core_kses($settings['title']); ?>
                               </h2>
 							<?php endif; ?>
 
+							<?php if(!empty($settings['portx_button'])) : ?>
                               <div class="tp-slide-btn-box">
-                                 <a class="thm-btn" href="about.html">EXPLORE MORE</a>
+                                 <a <?php echo $this->get_render_attribute_string('button_arg'); ?>><?php echo esc_html($settings['portx_button']); ?></a>
                               </div>
+							<?php endif; ?>
+
                            </div>
                         </div>
                      </div>
@@ -330,7 +367,6 @@ class Portx_Hero extends Widget_Base {
       </div>
    </div>
    <!-- slider area end -->
-
 		<?php
 	}
 
